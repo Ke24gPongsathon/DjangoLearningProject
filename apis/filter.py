@@ -15,27 +15,23 @@ FILTER_CHOICES = [
 ]
 
 class UserFilter(django_filters.FilterSet):
-    # --------------Date---------------- #
-    created_at = django_filters.DateFromToRangeFilter(field_name='created_at')
-    # --------------User---------------- #
-    created_by = django_filters.ModelChoiceFilter(field_name='user', queryset=User.objects.all())
-    # --------------Status---------------- #
-    # --------------Text---------------- #
+    # created_at = django_filters.DateFromToRangeFilter(field_name='created_at')
+    email = django_filters.CharFilter(field_name='email', lookup_expr='icontains')
     name = django_filters.CharFilter(field_name='name', lookup_expr='icontains')
-    # --------------Other---------------- #
-    company = django_filters.ModelChoiceFilter(field_name='company', queryset=Company.objects.all())
-    is_verified = django_filters.BooleanFilter(field_name='is_verified')
-    search = django_filters.CharFilter(method='search_user')
+    citizen_id = django_filters.CharFilter(field_name='citizen_id', lookup_expr='exact')
+    gender = django_filters.ChoiceFilter(field_name='gender', choices=utils.GENDER_CHOICE)
 
-    def search_user(self, queryset, name, value):
-        return queryset.filter(
-            Q(email__icontains=value) | Q(first_name__icontains=value) | Q(last_name__icontains=value) | Q(
-                position__icontains=value) | Q(username__icontains=value) | Q(phone__icontains=value)
-        )
+    # search = django_filters.CharFilter(method='search_user')
+    # def search_user(self, queryset, name, value):
+    #     return queryset.filter(
+    #         Q(email__icontains=value) | Q(first_name__icontains=value) | Q(last_name__icontains=value) | Q(
+    #             position__icontains=value) | Q(username__icontains=value) | Q(phone__icontains=value)
+    #     )
 
     class Meta:
         model = User
         fields = [
-            'created_at', 'last_login', 'created_by', 'email', 'first_name',
-            'last_name', 'position', 'company', 'is_verified', 'search',
+            'created_at',
+            'email', 'name', 'citizen_id', 'gender', 'search',
         ]
+        
