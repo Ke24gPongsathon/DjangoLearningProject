@@ -1,5 +1,7 @@
 from django.db import models
-from apis import utils
+from apis import utils, managers
+from django.contrib.auth.models import AbstractUser
+
 
 class Address(utils.BaseModel):
     house_number = models.CharField(max_length=100, default='', blank=True)
@@ -17,7 +19,10 @@ class Address(utils.BaseModel):
 class User(utils.BaseModel):
     email = models.EmailField(max_length=255, default='', unique=True)
     name = models.CharField(max_length=100)
+    objects = managers.UserSafeDeleteManager()
     citizen_id = models.CharField(max_length=13, unique=True)
     gender = models.IntegerField(choices=utils.GENDER_CHOICE, default=utils.MALE)
-    address = models.OneToOneField(Address, on_delete=models.CASCADE, related_name="address_%(class)s")
+    address = models.OneToOneField(Address, null=True, on_delete=models.CASCADE, related_name="address_%(class)s")
+    
+    # REQUIRED_FIELDS = []
     

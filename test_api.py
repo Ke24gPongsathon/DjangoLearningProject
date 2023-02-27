@@ -14,13 +14,13 @@ def test_create_users():
         "citizen_id": "3333967890123",
         "gender": 2,
         "address": {
-            'house_number': '222/3',
-            'village': 'sompong village',
-            'road': 'suppasarn',
-            'sub_district': 'paknam',
-            'district': 'meuang',
-            'province': 'bkk',
-            'zip_code': '12912',
+            "house_number": "222/3",
+            "village": "sompong village",
+            "road": "suppasarn",
+            "sub_district": "paknam",
+            "district": "meuang",
+            "province": "bkk",
+            "zip_code": "12912",
         }
     }
 

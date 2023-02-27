@@ -19,4 +19,8 @@ from django.urls import path, include
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('api/', include('apis.urls')),
+
 ]
+
+# id ngDHYrXoWawHTUfFlMKK4z7OAa3Ma1Xm1WT1Y2ht
+# secret JeQAtHV1A0ko3OcetTln55lGPtWZXoWO1usfX2NMIk63oVE0cN9tpQu0jEydzb1Ua4rhyaUANaFNCiKcmgnrAaEp5rgTz4YIIzYSU4HUo3ZTV31uds8YxR9YgNQrGsCS

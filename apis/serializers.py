@@ -34,15 +34,15 @@ class UserSerializer(serializers.ModelSerializer):
         address_serializer.is_valid(raise_exception=True)
         address = address_serializer.save()
         
-        user = User.objects.create(address=address, **validated_data)
-
+        # user = User.objects.create(address=address, **validated_data)
+        user = User(address=address, **validated_data)
         return user
     
     def update(self, user, validated_data):
         address_data = validated_data.pop('address', None)
         if address_data:
             address_serializer = AddressSerializer(instance=user.address, data=address_data)
-            address_serializer.is_valid()
+            address_serializer.is_valid(raise_exception=True)
             address_serializer.save()
         
 
