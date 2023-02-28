@@ -16,7 +16,10 @@ class AddressSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Address
-        fields = '__all__'
+        fields = [
+            'house_number', 'village', 'road', 'sub_district',
+            'district', 'province', 'zip_code'
+        ]
 
 class UserSerializer(serializers.ModelSerializer):
     address = AddressSerializer()
@@ -56,4 +59,6 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = '__all__'
+        fields = [
+            'email', 'name', 'citizen_id', 'gender', 'address'
+        ]

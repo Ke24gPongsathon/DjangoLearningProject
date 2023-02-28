@@ -13,7 +13,7 @@ class Address(utils.BaseModel):
     zip_code = models.CharField(max_length=5, default='', blank=True)
     
     def __str__(self):
-        return f'{self.house_number} {self.village}' 
+        return f'{self.house_number} {self.village} {self.province}' 
     
 
 class User(utils.BaseModel):

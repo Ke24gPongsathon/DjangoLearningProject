@@ -1,23 +1,53 @@
-{% comment %} {% extends "template.html" %} {% endcomment %}
+{% extends 'base.html' %}
 {% block body %}
 
-<strong>Welcome <mark>{{ name }}</mark> to DjangoLearningProjects</strong>
-<br>
-
-<strong>We got your detail following below this</strong>
-<br>
-
-<strong>Name: {{ name }}</strong>
-<strong>Email: {{ email }}</strong>
-<strong>Citizen ID: {{ citizen_id }}</strong>
-<strong>Gender: {{ gender }}</strong>
-<strong>address: </strong> <br>
-<strong style="tab-size: 4">Email: {{ email }}</strong> <br>
-<strong style="tab-size: 4">Emahoil: {{ email }}</strong> <br>
-<strong style="tab-size: 4">Email: {{ email }}</strong> <br>
-<strong style="tab-size: 4">Email: {{ email }}</strong> <br>
-<strong style="tab-size: 4">Email: {{ email }}</strong> <br>
-
-
+<h1 align="center">Django Learning Project</h1>
+<h2 align="center">Welcome {{ name }} to Django Learning Project. We got your detail following this.</h2>
+<table role="presentation" align="center">
+	<tr>
+		<td>Email</td>
+		<td>{{ email }}</td>
+	</tr>
+	<tr>
+		<td>Name</td>
+		<td>{{ name }}</td>
+	</tr>
+	<tr>
+		<td>ID</td>
+		<td>{{ citizen_id }}</td>
+	</tr>
+	<tr>
+		<td>Gender</td>
+		<td>{{ gender }}</td>
+	</tr>
+	<tr>
+		<td>House Number</td>
+		<td>{{ address.house_number }}</td>
+	</tr>
+	<tr>
+		<td>Village</td>
+		<td>{{ address.village }}</td>
+	</tr>
+	<tr>
+		<td>Road</td>
+		<td>{{ address.road }}</td>
+	</tr>
+	<tr>
+		<td>Sub District</td>
+		<td>{{ address.sub_district }}</td>
+	</tr>
+	<tr>
+		<td>District</td>
+		<td>{{ address.district }}</td>
+	</tr>
+	<tr>
+		<td>Province</td>
+		<td>{{ address.province }}</td>
+	</tr>
+	<tr>
+		<td>Zip Code</td>
+		<td>{{ address.zip_code }}</td>
+	</tr>
+</table>
 
 {% endblock %}
