@@ -8,7 +8,7 @@ from apis.models import User, Address
 
 from django.db import IntegrityError
 
-from djangoLearningProject import settings
+from apps import settings
 
 
 
@@ -23,6 +23,7 @@ class AddressSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     address = AddressSerializer()
+    created_at = serializers.DateTimeField(format="%d/%m/%Y", read_only=True)
 
     
     def to_representation(self, instance):
@@ -37,8 +38,8 @@ class UserSerializer(serializers.ModelSerializer):
         address_serializer.is_valid(raise_exception=True)
         address = address_serializer.save()
         
-        # user = User.objects.create(address=address, **validated_data)
-        user = User(address=address, **validated_data)
+        user = User.objects.create(address=address, **validated_data)
+        # user = User(address=address, **validated_data)
         return user
     
     def update(self, user, validated_data):
@@ -60,5 +61,5 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
-            'email', 'name', 'citizen_id', 'gender', 'address'
+            'email', 'name', 'citizen_id', 'gender', 'address', 'created_at'
         ]

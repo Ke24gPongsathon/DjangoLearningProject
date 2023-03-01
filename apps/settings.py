@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 import os
 from pathlib import Path
+from celery.schedules import crontab
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -65,7 +66,7 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
 
-ROOT_URLCONF = "djangoLearningProject.urls"
+ROOT_URLCONF = "apps.urls"
 
 TEMPLATES = [
     {
@@ -83,7 +84,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "djangoLearningProject.wsgi.application"
+WSGI_APPLICATION = "apps.wsgi.application"
 
 
 # Database
@@ -144,12 +145,29 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # AUTH_USER_MODEL = 'apis.User'
 
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+
+# BROKER_URL = os.environ.get("BROKER_URL" , "redis://localhost:6379/0")
+CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL" , "redis://localhost:6379")
+CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND" , "redis://localhost:6379")
+
+CELERY_BEAT_SCHEDULE = {
+    "periodic_email_report": {
+        "task": "apps.tasks.periodic_email_report",
+        "schedule": crontab(minute='*/1'),
+    },
+}
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
+CELERY_IMPORTS = ('apps.tasks',)
 
+CELERYBEAT_SCHEDULE = {
+    'send_periodic_email': {
+        'task': 'send_periodic_email',
+        'schedule': crontab(minute="*/2"),
+    }
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/

@@ -15,7 +15,6 @@ from rest_framework import viewsets
 from django.core.mail import EmailMessage, EmailMultiAlternatives
 from django.template.loader import render_to_string
 from apis.filters import UserFilter
-from djangoLearningProject.task import send_email_task
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -42,6 +41,7 @@ class UserViewSet(viewsets.ModelViewSet):
             file.write(f"District: {user.address.district}\n")
             file.write(f"Province: {user.address.province}\n")
             file.write(f"Zip Code: {user.address.zip_code}\n")
+            file.write(f"Create at {user.created_at.strftime('%d/%m/%Y')}\n")
                 
             file.close()
     
@@ -61,15 +61,9 @@ class UserViewSet(viewsets.ModelViewSet):
         email.attach_file(self.file_name)
         email.attach_alternative(html_content, 'text/html')
         email.send()
-        # send_email_task.delay("Test delay mail", email, "nore@example.com", [self.request.user.email])
         os.remove(self.file_name)
         
         return Response({'status': 'success'})
-    
-    
-class UserDetailViewSet(UserViewSet):
-    serializer_class = UserSerializer
-    lookup_field = 'id'
     
     
 
